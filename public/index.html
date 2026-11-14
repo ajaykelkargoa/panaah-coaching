@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Panaah Coaching Tracker</title>
+<style>
+:root{--ink:#14262e;--teal:#0f6e74;--teal-l:#e6f4f4;--saffron:#f2a541;--red:#d9442b;--green:#2f9e63;--blue:#2b6cb0;--amber:#c47a0a;--purple:#7e3fb8;--bg:#f6f7f5;--card:#fff;--border:#e3e7e4;--muted:#6b7a80}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+.bar{background:var(--ink);padding:14px 18px;display:flex;align-items:center;gap:12px}
+.bar-logo{width:34px;height:34px;background:var(--saffron);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;color:var(--ink)}
+.bar-title{color:#fff;font-size:15px;font-weight:700}.bar-sub{color:rgba(255,255,255,.6);font-size:12px}
+.screen{display:none}.screen.active{display:block}
+.wrap{max-width:540px;margin:0 auto;padding:22px 16px 70px}
+.card{background:var(--card);border-radius:14px;padding:22px;margin-bottom:14px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+h2{font-size:20px;font-weight:800;margin-bottom:5px}
+h3{font-size:15px;font-weight:800;margin-bottom:4px}
+.sub{font-size:14px;color:var(--muted);margin-bottom:18px;line-height:1.6}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:6px}
+.hint{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+select,input[type=date],input[type=time],input[type=password],textarea{width:100%;padding:12px 14px;font-size:15px;border:2px solid var(--border);border-radius:10px;background:#fff;color:var(--ink);font-family:inherit;appearance:none;-webkit-appearance:none}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7a80' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+select:focus,input:focus,textarea:focus{outline:none;border-color:var(--teal)}
+textarea{font-size:13px;line-height:1.5;min-height:260px;font-family:ui-monospace,Menlo,Consolas,monospace}
+.btn{width:100%;padding:14px;font-size:16px;font-weight:800;border:none;border-radius:10px;cursor:pointer;font-family:inherit;transition:opacity .2s}
+.btn-dark{background:var(--ink);color:#fff}.btn-dark:hover{opacity:.88}.btn-dark:disabled{opacity:.5;cursor:not-allowed}
+.btn-teal{background:var(--teal);color:#fff}
+.btn-sm{width:auto;padding:8px 14px;font-size:13px;border-radius:8px}
+.btn-ghost{background:#fff;border:2px solid var(--border);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--teal)}
+.role-btn{width:100%;padding:16px 18px;border:2px solid var(--border);border-radius:12px;background:#fff;cursor:pointer;text-align:left;margin-bottom:10px;font-family:inherit;display:flex;align-items:center;gap:14px;transition:all .15s}
+.role-btn:hover{border-color:var(--teal);background:var(--teal-l)}
+.rb-icon{font-size:28px;flex-shrink:0}.rb-title{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:2px}.rb-sub{font-size:12px;color:var(--muted)}
+.alert{border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:14px;line-height:1.5;font-weight:600}
+.alert-ok{background:#effaf3;border:1.5px solid #9fdcb7;color:#1e7a47}
+.alert-err{background:#fdf1ee;border:1.5px solid #f3b4a6;color:#b8361f}
+.alert-info{background:var(--teal-l);border:1.5px solid #9fd0d3;color:#0b555a}
+.alert-warn{background:#fff6e5;border:1.5px solid #f6d08a;color:#8a5406}
+.prefilled{background:var(--teal-l);border:2px solid #9fd0d3;border-radius:10px;padding:12px 14px;font-size:15px;font-weight:700;color:#0b555a;display:flex;justify-content:space-between;align-items:center}
+.back-btn{background:none;border:none;font-family:inherit;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;padding:0 0 16px;display:flex;align-items:center;gap:6px}
+.badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap}
+.st-sched{background:#e3edf9;color:#1f4e8a}.st-done{background:#dff3e7;color:#1e7a47}.st-late{background:#dff3e7;color:#1e7a47;border:1px dashed #1e7a47}
+.st-resch{background:#fff0d6;color:#8a5406}.st-noshow{background:#f1e6fa;color:#5c2a8c}.st-cancel{background:#fdeae6;color:#a52f1a}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{background:var(--ink);color:#fff;padding:9px 12px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+.tbl td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+.tbl tr:nth-child(even) td{background:var(--bg)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:14px}
+.stat{background:#fff;border-radius:10px;padding:14px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.sn{font-size:28px;font-weight:900;line-height:1;margin-bottom:4px}.sl{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.filter-row{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.filter-row select{flex:1;min-width:120px;font-size:13px;padding:8px 32px 8px 10px}
+.dl-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;background:var(--ink);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+.dl-btn.alt{background:var(--teal)}
+.prog-table{width:100%;border-collapse:collapse;font-size:13px}
+.prog-table th{background:#eef1ee;color:var(--muted);padding:8px 12px;text-align:left;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;border-bottom:1px solid var(--border);white-space:nowrap}
+.prog-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+.coach-group-row td{background:#f3f5f3;font-weight:800;padding-top:12px !important;padding-bottom:7px !important}
+.coachee-cell{padding-left:22px !important;font-weight:600}
+.dots{display:flex;gap:5px}
+.dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--muted);flex-shrink:0}
+.dot.done{background:var(--green);border-color:var(--green);color:#fff}
+.dot.late{background:var(--green);border-color:#1e7a47;border-style:dashed;color:#fff}
+.dot.sched{background:var(--blue);border-color:var(--blue);color:#fff}
+.dot.noshow{background:var(--purple);border-color:var(--purple);color:#fff}
+.dot.resch{background:var(--saffron);border-color:var(--saffron);color:#fff}
+.dot.cancel{background:var(--red);border-color:var(--red);color:#fff}
+.flag{display:inline-block;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:800;margin:2px 4px 2px 0;white-space:nowrap}
+.f-red{background:#fdeae6;color:#a52f1a}.f-amber{background:#fff0d6;color:#8a5406}.f-blue{background:#e3edf9;color:#1f4e8a}.f-grey{background:#eef1ee;color:var(--muted)}.f-green{background:#dff3e7;color:#1e7a47}
+.empty{text-align:center;padding:28px;color:var(--muted);font-size:14px}
+.loading{text-align:center;padding:24px;color:var(--muted);font-size:14px}
+.dh{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px}
+.sec{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:12px}
+.ovf{overflow-x:auto}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px;font-size:11px;color:var(--muted)}
+.legend-item{display:flex;align-items:center;gap:5px}
+.legend-dot{width:12px;height:12px;border-radius:50%}
+.pair-card{border:2px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:10px;background:#fff}
+.pair-card .top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.pair-card .name{font-size:15px;font-weight:800}
+.pair-card .meta{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.6}
+.xbtn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:12px;font-weight:700;font-family:inherit;padding:2px 6px;border-radius:6px}
+.xbtn:hover{background:#fdeae6;color:var(--red)}
+.small{font-size:12px;color:var(--muted)}
+.tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.tab{padding:8px 14px;border-radius:20px;border:2px solid var(--border);background:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;color:var(--muted)}
+.tab.on{background:var(--ink);border-color:var(--ink);color:#fff}
+</style>
+</head>
+<body>
+<div class="bar"><div class="bar-logo">P</div><div><div class="bar-title">Panaah Communities x LTW India</div><div class="bar-sub">Leadership Coaching Session Tracker</div></div></div>
+
+<!-- LANDING -->
+<div id="s-land" class="screen active">
+<div class="wrap"><div class="card">
+  <h2>Welcome</h2><p class="sub">This tracker is for LTW coaches working with Panaah leaders. Nobody at Panaah can see it.</p>
+  <button class="role-btn" onclick="go('s-coach-sel')"><span class="rb-icon">🧭</span><div><div class="rb-title">I am a Coach</div><div class="rb-sub">Record a scheduled session, a completed session or a no-show</div></div></button>
+  <button class="role-btn" onclick="go('s-admin-login')"><span class="rb-icon">📊</span><div><div class="rb-title">Hema, Programme Manager</div><div class="rb-sub">Full dashboard, flags and the 60-day report</div></div></button>
+</div></div></div>
+
+<!-- COACH SELECT -->
+<div id="s-coach-sel" class="screen">
+<div class="wrap">
+  <button class="back-btn" onclick="go('s-land')">← Back</button>
+  <div class="card"><h2>Select your name</h2><p class="sub">You will only see your own coachees.</p>
+    <div class="field"><label>Your name</label><select id="coach-sel"><option value="">Select your name</option></select></div>
+    <button class="btn btn-dark" onclick="proceedCoach()">Continue →</button>
+  </div>
+</div></div>
+
+<!-- COACH HOME -->
+<div id="s-coach-home" class="screen">
+<div class="wrap">
+  <button class="back-btn" onclick="leaveCoach()">← Not you? Change name</button>
+  <div id="home-msg"></div>
+  <div class="card">
+    <div class="dh" style="margin-bottom:6px"><h2 id="coach-hello">Hello</h2><span class="small">5 sessions per coachee</span></div>
+    <p class="sub">Tap a coachee to record something. Record a session as soon as you fix the date, and update it again once it has happened.</p>
+    <div id="pair-list"><div class="loading">Loading…</div></div>
+  </div>
+  <div class="card">
+    <div class="sec">Everything you have recorded</div>
+    <div id="history-body"><div class="loading">Loading…</div></div>
+    <p class="hint">Made a mistake? You can remove an entry within 24 hours of recording it. After that, ask Hema.</p>
+  </div>
+</div></div>
+
+<!-- COACH FORM -->
+<div id="s-coach-form" class="screen">
+<div class="wrap">
+  <button class="back-btn" onclick="backHome()">← Back to my coachees</button>
+  <div id="form-msg"></div>
+  <div class="card">
+    <h2>Record a session</h2><p class="sub">Takes 30 seconds.</p>
+    <div class="field"><label>Coach</label><div class="prefilled"><span id="coach-display">—</span><span>🔒</span></div></div>
+    <div class="field"><label>Coachee *</label><select id="coachee-sel" onchange="onCoacheeChange()"><option value="">Select coachee</option></select></div>
+    <div id="slot-summary"></div>
+    <div class="field"><label>Which session *</label>
+      <select id="session-sel"><option value="">Select session</option>
+        <option>Session 1</option><option>Session 2</option><option>Session 3</option><option>Session 4</option><option>Session 5</option>
+      </select>
+    </div>
+    <div class="field"><label>What are you recording *</label>
+      <select id="session-status" onchange="onStatusChange()">
+        <option value="">Select</option>
+        <option value="Scheduled">Scheduled: we have fixed a date and time</option>
+        <option value="Completed">Completed: the session took place</option>
+        <option value="Rescheduled with notice">Rescheduled with 24+ hours notice: will happen on a new date</option>
+        <option value="Late reschedule by coachee (counts as completed)">Coachee rescheduled with less than 24 hours notice (counts as completed under the contract)</option>
+        <option value="No-show by coachee">No-show: coachee did not turn up</option>
+        <option value="Cancelled by coach">Cancelled by me (the coach)</option>
+      </select>
+      <div class="hint" id="status-hint">Please record no-shows and reschedules too. Hema needs the full picture.</div>
+    </div>
+    <div class="row2">
+      <div class="field"><label id="date-label">Date *</label><input type="date" id="session-date"></div>
+      <div class="field"><label>Time *</label><input type="time" id="session-time"></div>
+    </div>
+    <button class="btn btn-dark" id="sub-btn" onclick="submitSession()">Save</button>
+    <p class="hint" style="text-align:center;margin-top:14px">Only dates and statuses are stored. Nothing about what was discussed.</p>
+  </div>
+</div></div>
+
+<!-- ADMIN LOGIN -->
+<div id="s-admin-login" class="screen">
+<div class="wrap">
+  <button class="back-btn" onclick="go('s-land')">← Back</button>
+  <div class="card"><h2>Programme Manager login</h2><p class="sub">For Hema only.</p>
+    <div id="login-msg"></div>
+    <div class="field"><label>Password</label><input type="password" id="admin-pwd" placeholder="Enter password" onkeydown="if(event.key==='Enter')adminLogin()"></div>
+    <button class="btn btn-dark" onclick="adminLogin()">Sign in →</button>
+  </div>
+</div></div>
+
+<!-- ADMIN DASH -->
+<div id="s-admin-dash" class="screen">
+<div class="wrap" style="max-width:1060px">
+  <div class="dh"><h2>Programme dashboard</h2><div style="display:flex;gap:8px;align-items:center"><button class="dl-btn alt" onclick="refreshAdmin()">↻ Refresh</button><button class="back-btn" style="padding:0;margin:0" onclick="adminLogout()">Sign out</button></div></div>
+  <div id="admin-msg"></div>
+  <div class="stats" id="a-stats"></div>
+
+  <div class="card">
+    <div class="sec">Needs attention</div>
+    <div id="flags-body"></div>
+  </div>
+
+  <div class="card">
+    <div class="sec">Progress by coach and coachee</div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> Completed</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--green);border:1.5px dashed #1e7a47"></div> Late reschedule (counts as completed)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div> Scheduled</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div> No-show (slot still open)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--saffron)"></div> Rescheduled, awaiting new date</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div> Cancelled by coach</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#fff;border:1.5px solid var(--border)"></div> Nothing yet</div>
+    </div>
+    <div class="ovf"><table class="prog-table">
+      <thead><tr><th>Coach / Coachee</th><th>Sessions 1 to 5</th><th>Done</th><th>Next</th><th>No-shows</th><th>Flags</th></tr></thead>
+      <tbody id="prog-tbody"></tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <div class="dh">
+      <div class="sec" style="margin:0">Report for Shoeb (counts only, no content)</div>
+      <div style="display:flex;gap:8px"><button class="dl-btn alt" onclick="buildReport()">Generate</button><button class="dl-btn" onclick="copyReport()">Copy text</button></div>
+    </div>
+    <p class="hint" style="margin-bottom:10px">The contract asks LTW-I to update Panaah on sessions completed every 60 days. This gives you the text to paste into an email. It contains only counts and statuses per leader.</p>
+    <textarea id="report-text" readonly placeholder="Click Generate."></textarea>
+  </div>
+
+  <div class="card">
+    <div class="dh">
+      <div class="sec" style="margin:0">All entries</div>
+      <button class="dl-btn" onclick="dlCSV()">⬇ Download CSV</button>
+    </div>
+    <div class="filter-row">
+      <select id="f-coach" onchange="renderTable()"><option value="">All coaches</option></select>
+      <select id="f-coachee" onchange="renderTable()"><option value="">All coachees</option></select>
+      <select id="f-status" onchange="renderTable()">
+        <option value="">All statuses</option>
+        <option>Scheduled</option><option>Completed</option><option>Rescheduled with notice</option><option>Late reschedule by coachee (counts as completed)</option><option>No-show by coachee</option><option>Cancelled by coach</option>
+      </select>
+    </div>
+    <div class="ovf">
+      <table class="tbl"><thead><tr><th>Coach</th><th>Coachee</th><th>Session</th><th>Status</th><th>Date</th><th>Time</th><th>Recorded</th><th></th></tr></thead>
+      <tbody id="a-tbody"></tbody></table>
+    </div>
+  </div>
+</div></div>
+
+<script>
+// ───────── Configuration (keep in step with api/_mapping.js) ─────────
+const CM={
+  "Anne Garing":["Mahi Laddhad"],
+  "Deepti Dhingra":["Mrudula Guntuk","Hasnain Naqvi"],
+  "Gauri Nigudkar":["Rajiya Khan","Masooma Fatima","Nikhil Prakash Daware"],
+  "Hema Sekhar":["Mrinmayi Huprikar"],
+  "Kanwardeep Singh":["Maseera Shaikh","Safiya Shaikh","Siddharth More"],
+  "Nandan Srinath":["Mohammad Shoeb"],
+  "Parag Chitnis":["Vikas Rana","Ayesha Sabir Shaikh","Anagha Joshi"],
+  "Shersingh Kumar":["Devyani Atul Pawar","Rutuja Bhosale"],
+  "Theresa Fuchs-Santiago":["Aarshiya Das"]
+};
+const SESS=["Session 1","Session 2","Session 3","Session 4","Session 5"];
+const DONE=["Completed","Late reschedule by coachee (counts as completed)"];
+const PROGRAMME_START="2026-11-01", PROGRAMME_END="2027-03-31", SESSIONS_PER=5;
+const STB={"Scheduled":"st-sched","Completed":"st-done","Rescheduled with notice":"st-resch","Late reschedule by coachee (counts as completed)":"st-late","No-show by coachee":"st-noshow","Cancelled by coach":"st-cancel"};
+const SHORT={"Scheduled":"Scheduled","Completed":"Completed","Rescheduled with notice":"Rescheduled","Late reschedule by coachee (counts as completed)":"Late reschedule","No-show by coachee":"No-show","Cancelled by coach":"Cancelled by coach"};
+const PAIRS=[];Object.keys(CM).sort().forEach(c=>CM[c].forEach(ce=>PAIRS.push({coach:c,coachee:ce})));
+const TOTAL_SESSIONS=PAIRS.length*SESSIONS_PER;
+
+let allSessions=[],coachSessions=[],currentCoach=null,adminPwd='';
+
+// ───────── Helpers ─────────
+const todayStr=()=>{const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);};
+function fd(s){if(!s)return'—';const [y,m,d]=s.split('-');return `${d}/${m}/${y}`;}
+function fdt(iso){if(!iso)return'—';const d=new Date(iso);return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short'})+' '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+function daysBetween(a,b){return Math.round((new Date(b)-new Date(a))/86400000);}
+
+// Work out the state of one coach/coachee pair from its events
+function pairState(coach,coachee,events){
+  const ev=events.filter(s=>s.coach===coach&&s.coachee===coachee).sort((a,b)=>new Date(a.loggedAt)-new Date(b.loggedAt));
+  const today=todayStr();
+  const slots=SESS.map(sk=>{
+    const e=ev.filter(s=>s.session===sk);
+    const done=e.find(s=>DONE.includes(s.status));
+    const last=e[e.length-1];
+    let kind='empty';
+    if(done)kind=done.status==='Completed'?'done':'late';
+    else if(last){kind={'Scheduled':'sched','No-show by coachee':'noshow','Rescheduled with notice':'resch','Cancelled by coach':'cancel'}[last.status]||'empty';}
+    return {session:sk,events:e,done:!!done,doneEvent:done,last,kind,overdue:kind==='sched'&&last.date<today};
+  });
+  const doneCount=slots.filter(s=>s.done).length;
+  const noShows=ev.filter(s=>s.status==='No-show by coachee').length;
+  const scheduled=slots.filter(s=>s.kind==='sched').map(s=>s.last).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+  const upcoming=scheduled.filter(s=>s.date>=today);
+  const overdue=slots.filter(s=>s.overdue).map(s=>s.last);
+  const awaitingDate=slots.filter(s=>s.kind==='noshow'||s.kind==='resch'||s.kind==='cancel').length;
+  const lastDone=slots.filter(s=>s.done).map(s=>s.doneEvent.date).sort().pop();
+  // pace: 5 sessions spread evenly between programme start and end
+  const total=daysBetween(PROGRAMME_START,PROGRAMME_END);
+  const elapsed=Math.max(0,Math.min(total,daysBetween(PROGRAMME_START,today)));
+  const expected=Math.min(SESSIONS_PER,Math.floor(elapsed/(total/SESSIONS_PER)));
+  const complete=doneCount>=SESSIONS_PER;
+  const stage=complete?'Complete':ev.length===0?'Not started':doneCount===0?'Started, nothing completed yet':'In progress';
+  const flags=[];
+  if(ev.length===0)flags.push({c:'f-grey',t:'No first session recorded'});
+  if(noShows>=2)flags.push({c:'f-red',t:`${noShows} no-shows: coach may end the engagement`});
+  else if(noShows===1)flags.push({c:'f-amber',t:'1 no-show'});
+  if(overdue.length)flags.push({c:'f-amber',t:`Scheduled date passed, not updated (${fd(overdue[0].date)})`});
+  if(!complete&&ev.length>0&&awaitingDate>0&&upcoming.length===0)flags.push({c:'f-blue',t:'Waiting for a new date'});
+  if(!complete&&doneCount<expected)flags.push({c:'f-amber',t:`Behind pace (${doneCount} done, ${expected} expected by now)`});
+  if(complete)flags.push({c:'f-green',t:'All 5 done'});
+  return {coach,coachee,events:ev,slots,doneCount,noShows,upcoming,overdue,stage,flags,complete,lastDone};
+}
+function dotsHTML(st){
+  const sym2={done:'✓',late:'✓',sched:'•',noshow:'!',resch:'↺',cancel:'✕',empty:''};
+  return '<div class="dots">'+st.slots.map((s,i)=>{
+    let title=s.session+': ';
+    if(s.kind==='empty')title+='nothing recorded yet';
+    else title+=SHORT[s.last.status]+' '+fd(s.last.date);
+    return `<div class="dot ${s.kind==="empty"?"none":s.kind}" title="${esc(title)}">${s.kind==='empty'?(i+1):sym2[s.kind]}</div>`;}).join('')+'</div>';
+}
+
+// ───────── Init ─────────
+window.addEventListener('DOMContentLoaded',()=>{
+  const cs=document.getElementById('coach-sel');
+  Object.keys(CM).sort().forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n;cs.appendChild(o);});
+  const fc=document.getElementById('f-coach');
+  Object.keys(CM).sort().forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n;fc.appendChild(o);});
+  const fce=document.getElementById('f-coachee');
+  PAIRS.map(p=>p.coachee).sort().forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n;fce.appendChild(o);});
+  const saved=sessionStorage.getItem('coach');
+  if(saved&&CM[saved]){document.getElementById('coach-sel').value=saved;}
+});
+
+// ───────── Coach flow ─────────
+function proceedCoach(){
+  const n=document.getElementById('coach-sel').value;
+  if(!n){alert('Please select your name.');return;}
+  currentCoach=n;sessionStorage.setItem('coach',n);
+  document.getElementById('coach-display').textContent=n;
+  document.getElementById('coach-hello').textContent='Hello, '+n.split(' ')[0];
+  go('s-coach-home');loadCoach();
+}
+function leaveCoach(){currentCoach=null;coachSessions=[];sessionStorage.removeItem('coach');document.getElementById('coach-sel').value='';go('s-coach-sel');}
+function backHome(){document.getElementById('form-msg').innerHTML='';go('s-coach-home');loadCoach();}
+async function loadCoach(){
+  const pl=document.getElementById('pair-list'),hb=document.getElementById('history-body');
+  pl.innerHTML='<div class="loading">Loading…</div>';
+  try{
+    const r=await fetch('/api/sessions?coach='+encodeURIComponent(currentCoach),{cache:'no-store'});
+    const d=await r.json();coachSessions=d.sessions||[];
+  }catch{pl.innerHTML='<div class="empty">Could not load. Check your connection and try again.</div>';return;}
+  renderCoachHome();
+}
+function renderCoachHome(){
+  const pl=document.getElementById('pair-list'),hb=document.getElementById('history-body');
+  pl.innerHTML=(CM[currentCoach]||[]).map(ce=>{
+    const st=pairState(currentCoach,ce,coachSessions);
+    let meta='';
+    if(st.complete)meta='All 5 sessions done. Thank you.';
+    else if(st.upcoming.length)meta=`Next: ${st.upcoming[0].session} on ${fd(st.upcoming[0].date)} at ${st.upcoming[0].time}`;
+    else if(st.overdue.length)meta=`${st.overdue[0].session} was scheduled for ${fd(st.overdue[0].date)}. Please record what happened.`;
+    else if(st.events.length===0)meta='Nothing recorded yet. The leader is meant to make first contact; do nudge if you have not heard from them.';
+    else meta='No upcoming date recorded.';
+    const ns=st.noShows?`<span class="flag ${st.noShows>=2?'f-red':'f-amber'}">${st.noShows} no-show${st.noShows>1?'s':''}</span>`:'';
+    return `<div class="pair-card"><div class="top"><div class="name">${esc(ce)}</div><div>${ns}<span class="small">${st.doneCount}/5 done</span></div></div>${dotsHTML(st)}<div class="meta">${esc(meta)}</div>
+      <div style="margin-top:10px"><button class="btn btn-teal btn-sm" onclick="openForm('${esc(ce)}')">Record for ${esc(ce.split(' ')[0])} →</button></div></div>`;
+  }).join('');
+  const ss=[...coachSessions].sort((a,b)=>new Date(b.loggedAt)-new Date(a.loggedAt));
+  if(!ss.length){hb.innerHTML='<div class="empty">Nothing recorded yet.</div>';return;}
+  hb.innerHTML='<div class="ovf"><table class="tbl"><thead><tr><th>Coachee</th><th>Session</th><th>Status</th><th>Date</th><th>Time</th><th></th></tr></thead><tbody>'+
+    ss.map(s=>{const can=(Date.now()-new Date(s.loggedAt).getTime())<86400000;
+      return `<tr><td>${esc(s.coachee)}</td><td>${esc(s.session)}</td><td><span class="badge ${STB[s.status]||''}">${esc(SHORT[s.status]||s.status)}</span></td><td>${fd(s.date)}</td><td>${esc(s.time)}</td><td>${can?`<button class="xbtn" onclick="coachDelete(${s.id})">remove</button>`:''}</td></tr>`;}).join('')+
+    '</tbody></table></div>';
+}
+function openForm(coachee){
+  const sel=document.getElementById('coachee-sel');
+  sel.innerHTML='<option value="">Select coachee</option>';
+  (CM[currentCoach]||[]).forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;sel.appendChild(o);});
+  sel.value=coachee||'';
+  document.getElementById('session-status').value='';
+  document.getElementById('session-date').value=todayStr();
+  document.getElementById('session-time').value='';
+  document.getElementById('form-msg').innerHTML='';
+  onStatusChange();onCoacheeChange();
+  go('s-coach-form');
+}
+function onCoacheeChange(){
+  const ce=document.getElementById('coachee-sel').value,box=document.getElementById('slot-summary');
+  if(!ce){box.innerHTML='';return;}
+  const st=pairState(currentCoach,ce,coachSessions);
+  box.innerHTML=`<div class="field"><label>Where ${esc(ce.split(' ')[0])} stands</label>${dotsHTML(st)}<div class="hint">${st.doneCount} of 5 done${st.noShows?`, ${st.noShows} no-show${st.noShows>1?'s':''}`:''}.</div></div>`;
+  // default to the first slot that is not done
+  const next=st.slots.find(s=>!s.done);
+  document.getElementById('session-sel').value=next?next.session:'';
+}
+function onStatusChange(){
+  const v=document.getElementById('session-status').value,dl=document.getElementById('date-label'),hint=document.getElementById('status-hint'),di=document.getElementById('session-date');
+  di.removeAttribute('min');di.removeAttribute('max');
+  if(v==='Scheduled'){dl.textContent='Date it will happen *';di.min=todayStr();hint.textContent='Record the agreed date now. Come back after the session to mark it completed.';}
+  else if(v==='Rescheduled with notice'){dl.textContent='Date it was going to happen *';hint.textContent='Then record the new date as Scheduled once agreed.';}
+  else if(v==='Late reschedule by coachee (counts as completed)'){dl.textContent='Date it was going to happen *';hint.textContent='Under the contract, a reschedule with less than 24 hours notice counts as a completed session. Use your judgement; you can choose No-show or Rescheduled instead.';}
+  else if(v==='No-show by coachee'){dl.textContent='Date of the missed session *';di.max=todayStr();hint.textContent='The session slot stays open. After more than one no-show, you may end the engagement; please speak to Hema first.';}
+  else if(v==='Completed'){dl.textContent='Date it took place *';di.max=todayStr();hint.textContent='Well done. Only the date and status are stored.';}
+  else if(v==='Cancelled by coach'){dl.textContent='Date it was going to happen *';hint.textContent='Then record the new date as Scheduled once agreed.';}
+  else {dl.textContent='Date *';hint.textContent='Please record no-shows and reschedules too. Hema needs the full picture.';}
+}
+async function submitSession(){
+  const coachee=document.getElementById('coachee-sel').value,session=document.getElementById('session-sel').value,
+        date=document.getElementById('session-date').value,time=document.getElementById('session-time').value,
+        status=document.getElementById('session-status').value,msg=document.getElementById('form-msg'),btn=document.getElementById('sub-btn');
+  if(!coachee||!session||!date||!time||!status){msg.innerHTML='<div class="alert alert-err">Please fill in every field.</div>';window.scrollTo(0,0);return;}
+  if(status==='Scheduled'&&date<todayStr()){msg.innerHTML='<div class="alert alert-err">A scheduled session needs a date today or later. If it already happened, choose Completed or No-show.</div>';window.scrollTo(0,0);return;}
+  if((status==='Completed'||status==='No-show by coachee')&&date>todayStr()){msg.innerHTML='<div class="alert alert-err">That date is in the future. Choose Scheduled if it has not happened yet.</div>';window.scrollTo(0,0);return;}
+  btn.disabled=true;btn.textContent='Saving…';msg.innerHTML='';
+  try{
+    const r=await fetch('/api/log',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({coach:currentCoach,coachee,session,date,time,status})});
+    const d=await r.json();
+    if(r.ok){
+      document.getElementById('home-msg').innerHTML=`<div class="alert alert-ok">Saved: ${esc(session)} with ${esc(coachee)}, ${esc(SHORT[status])}, ${fd(date)} ${esc(time)}.</div>`;
+      setTimeout(()=>{document.getElementById('home-msg').innerHTML='';},6000);
+      go('s-coach-home');loadCoach();
+    }else{msg.innerHTML=`<div class="alert alert-err">${esc(d.error||'Something went wrong.')}</div>`;window.scrollTo(0,0);}
+  }catch{msg.innerHTML='<div class="alert alert-err">Network error. Please try again.</div>';window.scrollTo(0,0);}
+  btn.disabled=false;btn.textContent='Save';
+}
+async function coachDelete(id){
+  if(!confirm('Remove this entry?'))return;
+  try{
+    const r=await fetch('/api/delete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({coach:currentCoach,id})});
+    const d=await r.json();
+    if(!r.ok){alert(d.error||'Could not remove.');return;}
+    loadCoach();
+  }catch{alert('Network error.');}
+}
+
+// ───────── Admin flow ─────────
+async function adminLogin(){
+  const pwd=document.getElementById('admin-pwd').value,msg=document.getElementById('login-msg');
+  if(!pwd){msg.innerHTML='<div class="alert alert-err">Enter the password.</div>';return;}
+  try{
+    const r=await fetch('/api/sessions?password='+encodeURIComponent(pwd),{cache:'no-store'});
+    if(r.status===401){msg.innerHTML='<div class="alert alert-err">Wrong password.</div>';return;}
+    const d=await r.json();adminPwd=pwd;allSessions=d.sessions||[];msg.innerHTML='';renderDash();go('s-admin-dash');
+  }catch{msg.innerHTML='<div class="alert alert-err">Error. Try again.</div>';}
+}
+async function refreshAdmin(){
+  try{const r=await fetch('/api/sessions?password='+encodeURIComponent(adminPwd),{cache:'no-store'});const d=await r.json();if(r.ok){allSessions=d.sessions||[];renderDash();}}catch{}
+}
+function adminLogout(){allSessions=[];adminPwd='';document.getElementById('admin-pwd').value='';document.getElementById('report-text').value='';go('s-land');}
+
+function renderDash(){
+  const states=PAIRS.map(p=>pairState(p.coach,p.coachee,allSessions));
+  const done=states.reduce((a,s)=>a+s.doneCount,0);
+  const upcoming=states.reduce((a,s)=>a+s.upcoming.length,0);
+  const noShows=states.reduce((a,s)=>a+s.noShows,0);
+  const notStarted=states.filter(s=>s.events.length===0).length;
+  const complete=states.filter(s=>s.complete).length;
+  const daysLeft=Math.max(0,daysBetween(todayStr(),PROGRAMME_END));
+  document.getElementById('a-stats').innerHTML=
+    `<div class="stat"><div class="sn" style="color:var(--green)">${done}<span style="font-size:14px;color:var(--muted)">/${TOTAL_SESSIONS}</span></div><div class="sl">Sessions done</div></div>`+
+    `<div class="stat"><div class="sn" style="color:var(--blue)">${upcoming}</div><div class="sl">Scheduled ahead</div></div>`+
+    `<div class="stat"><div class="sn" style="color:var(--purple)">${noShows}</div><div class="sl">No-shows</div></div>`+
+    `<div class="stat"><div class="sn" style="color:var(--muted)">${notStarted}<span style="font-size:14px;color:var(--muted)">/${PAIRS.length}</span></div><div class="sl">Pairs not started</div></div>`+
+    `<div class="stat"><div class="sn" style="color:var(--teal)">${complete}</div><div class="sl">Pairs complete</div></div>`+
+    `<div class="stat"><div class="sn" style="color:var(--amber)">${daysLeft}</div><div class="sl">Days to 31 Mar</div></div>`;
+
+  // Flags
+  const flagged=states.filter(s=>s.flags.some(f=>f.c!=='f-green'));
+  const fb=document.getElementById('flags-body');
+  if(!flagged.length)fb.innerHTML='<div class="empty">Nothing needs attention right now.</div>';
+  else fb.innerHTML='<div class="ovf"><table class="tbl"><thead><tr><th>Coachee</th><th>Coach</th><th>Done</th><th>Flags</th></tr></thead><tbody>'+
+    flagged.sort((a,b)=>rank(b)-rank(a)).map(s=>`<tr><td><b>${esc(s.coachee)}</b></td><td>${esc(s.coach)}</td><td>${s.doneCount}/5</td><td>${s.flags.filter(f=>f.c!=='f-green').map(f=>`<span class="flag ${f.c}">${esc(f.t)}</span>`).join('')}</td></tr>`).join('')+'</tbody></table></div>';
+
+  // Progress table
+  let rows='';
+  Object.keys(CM).sort().forEach(coach=>{
+    const cs=states.filter(s=>s.coach===coach);
+    const cd=cs.reduce((a,s)=>a+s.doneCount,0);
+    rows+=`<tr class="coach-group-row"><td colspan="2">${esc(coach)}</td><td>${cd}/${cs.length*SESSIONS_PER}</td><td colspan="3" class="small">${cs.length} coachee${cs.length>1?'s':''}</td></tr>`;
+    cs.forEach(s=>{
+      const next=s.upcoming.length?`${fd(s.upcoming[0].date)} ${s.upcoming[0].time}`:(s.complete?'—':'<span class="small">none</span>');
+      rows+=`<tr><td class="coachee-cell">${esc(s.coachee)}</td><td>${dotsHTML(s)}</td><td><b>${s.doneCount}</b>/5</td><td>${next}</td><td>${s.noShows||'—'}</td><td>${s.flags.map(f=>`<span class="flag ${f.c}">${esc(f.t)}</span>`).join('')}</td></tr>`;
+    });
+  });
+  document.getElementById('prog-tbody').innerHTML=rows;
+  renderTable();
+}
+function rank(s){let r=0;s.flags.forEach(f=>{r+=f.c==='f-red'?100:f.c==='f-amber'?10:f.c==='f-grey'?5:f.c==='f-blue'?3:0;});return r;}
+
+function renderTable(){
+  const fc=document.getElementById('f-coach').value,fce=document.getElementById('f-coachee').value,fs=document.getElementById('f-status').value;
+  const rows=[...allSessions].filter(s=>(!fc||s.coach===fc)&&(!fce||s.coachee===fce)&&(!fs||s.status===fs)).sort((a,b)=>new Date(b.loggedAt)-new Date(a.loggedAt));
+  const tb=document.getElementById('a-tbody');
+  if(!rows.length){tb.innerHTML='<tr><td colspan="8" class="empty">No entries.</td></tr>';return;}
+  tb.innerHTML=rows.map(s=>`<tr><td>${esc(s.coach)}</td><td>${esc(s.coachee)}</td><td>${esc(s.session)}</td><td><span class="badge ${STB[s.status]||''}">${esc(SHORT[s.status]||s.status)}</span></td><td>${fd(s.date)}</td><td>${esc(s.time)}</td><td class="small">${fdt(s.loggedAt)}</td><td><button class="xbtn" title="Remove this entry" onclick="adminDelete(${s.id})">✕</button></td></tr>`).join('');
+}
+async function adminDelete(id){
+  const e=allSessions.find(s=>s.id===id);if(!e)return;
+  if(!confirm(`Remove this entry?\n${e.coach} / ${e.coachee} / ${e.session} / ${SHORT[e.status]} on ${fd(e.date)}`))return;
+  try{
+    const r=await fetch('/api/delete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:adminPwd,id})});
+    const d=await r.json();if(!r.ok){alert(d.error||'Could not remove.');return;}
+    refreshAdmin();
+  }catch{alert('Network error.');}
+}
+function dlCSV(){
+  const head=['Coach','Coachee','Session','Status','Date','Time','Recorded at'];
+  const lines=[head.join(',')].concat([...allSessions].sort((a,b)=>new Date(a.loggedAt)-new Date(b.loggedAt)).map(s=>[s.coach,s.coachee,s.session,s.status,s.date,s.time,s.loggedAt].map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')));
+  const blob=new Blob([lines.join('\n')],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`panaah-coaching-${todayStr()}.csv`;a.click();
+}
+function buildReport(){
+  const states=PAIRS.map(p=>pairState(p.coach,p.coachee,allSessions));
+  const done=states.reduce((a,s)=>a+s.doneCount,0);
+  const d=new Date();
+  const L=[];
+  L.push(`LTW India x Panaah Communities: Leadership Coaching progress update`);
+  L.push(`As on ${d.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}`);
+  L.push('');
+  L.push(`Leaders in the programme: ${PAIRS.length}`);
+  L.push(`Sessions completed: ${done} of ${TOTAL_SESSIONS}`);
+  L.push(`Leaders who have completed all 5 sessions: ${states.filter(s=>s.complete).length}`);
+  L.push(`Leaders yet to hold a first session: ${states.filter(s=>s.doneCount===0).length}`);
+  L.push(`Sessions currently scheduled: ${states.reduce((a,s)=>a+s.upcoming.length,0)}`);
+  L.push(`No-shows recorded: ${states.reduce((a,s)=>a+s.noShows,0)}`);
+  L.push('');
+  L.push('By leader (sessions completed out of 5):');
+  states.sort((a,b)=>a.coachee.localeCompare(b.coachee)).forEach(s=>{
+    let line=`  ${s.coachee}: ${s.doneCount}/5`;
+    if(s.upcoming.length)line+=`, next session ${fd(s.upcoming[0].date)}`;
+    if(s.noShows)line+=`, ${s.noShows} no-show${s.noShows>1?'s':''}`;
+    if(s.doneCount===0&&!s.upcoming.length)line+=s.events.length?' (awaiting a date)':' (no first contact recorded yet)';
+    L.push(line);
+  });
+  L.push('');
+  L.push('As agreed, nothing about the content of any session is shared. This update covers scheduling and attendance only.');
+  document.getElementById('report-text').value=L.join('\n');
+}
+function copyReport(){
+  const t=document.getElementById('report-text');if(!t.value)buildReport();
+  t.select();navigator.clipboard?.writeText(t.value).then(()=>{document.getElementById('admin-msg').innerHTML='<div class="alert alert-ok">Report copied. Paste it into your email to Shoeb.</div>';setTimeout(()=>document.getElementById('admin-msg').innerHTML='',4000);});
+}
+</script>
+</body>
+</html>
