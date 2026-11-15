@@ -8,5 +8,15 @@
     "time": "16:00",
     "status": "Scheduled",
     "loggedAt": "2026-11-14T13:36:51.625Z"
+  },
+  {
+    "id": 1794721662060,
+    "coach": "Nandan Srinath",
+    "coachee": "Mohammad Shoeb",
+    "session": "Session 1",
+    "date": "2026-11-09",
+    "time": "18:00",
+    "status": "Completed",
+    "loggedAt": "2026-11-15T05:47:42.060Z"
   }
 ]
