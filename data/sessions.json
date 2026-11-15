@@ -28,5 +28,15 @@
     "time": "11:00",
     "status": "Scheduled",
     "loggedAt": "2026-11-15T05:48:32.740Z"
+  },
+  {
+    "id": 1794747645748,
+    "coach": "Deepti Dhingra",
+    "coachee": "Mrudula Guntuk",
+    "session": "Session 1",
+    "date": "2026-11-14",
+    "time": "16:30",
+    "status": "Completed",
+    "loggedAt": "2026-11-15T13:00:45.748Z"
   }
 ]
