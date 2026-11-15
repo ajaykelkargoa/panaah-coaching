@@ -68,5 +68,15 @@
     "time": "21:30",
     "status": "Completed",
     "loggedAt": "2026-11-15T15:16:54.560Z"
+  },
+  {
+    "id": 1794755909457,
+    "coach": "Anne Garing",
+    "coachee": "Mahi Laddhad",
+    "session": "Session 2",
+    "date": "2026-12-03",
+    "time": "08:00",
+    "status": "Scheduled",
+    "loggedAt": "2026-11-15T15:18:29.457Z"
   }
 ]
