@@ -98,5 +98,15 @@
     "time": "15:00",
     "status": "Completed",
     "loggedAt": "2026-11-17T13:59:45.786Z"
+  },
+  {
+    "id": 1794924027576,
+    "coach": "Parag Chitnis",
+    "coachee": "Ayesha Sabir Shaikh",
+    "session": "Session 2",
+    "date": "2026-11-20",
+    "time": "11:00",
+    "status": "Scheduled",
+    "loggedAt": "2026-11-17T14:00:27.576Z"
   }
 ]
