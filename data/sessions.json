@@ -138,5 +138,15 @@
     "time": "14:00",
     "status": "Completed",
     "loggedAt": "2026-11-18T02:19:43.970Z"
+  },
+  {
+    "id": 1794968409550,
+    "coach": "Gauri Nigudkar",
+    "coachee": "Masooma Fatima",
+    "session": "Session 1",
+    "date": "2026-11-12",
+    "time": "16:00",
+    "status": "Completed",
+    "loggedAt": "2026-11-18T02:20:09.550Z"
   }
 ]
