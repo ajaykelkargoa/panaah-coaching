@@ -128,5 +128,15 @@
     "time": "11:00",
     "status": "No-show by coachee",
     "loggedAt": "2026-11-17T14:03:44.259Z"
+  },
+  {
+    "id": 1794968383970,
+    "coach": "Gauri Nigudkar",
+    "coachee": "Rajiya Khan",
+    "session": "Session 1",
+    "date": "2026-11-12",
+    "time": "14:00",
+    "status": "Completed",
+    "loggedAt": "2026-11-18T02:19:43.970Z"
   }
 ]
