@@ -178,5 +178,15 @@
     "time": "10:00",
     "status": "Scheduled",
     "loggedAt": "2026-11-19T08:01:03.091Z"
+  },
+  {
+    "id": 1795075286862,
+    "coach": "Shersingh Kumar",
+    "coachee": "Rutuja Bhosale",
+    "session": "Session 1",
+    "date": "2026-11-16",
+    "time": "12:00",
+    "status": "Completed",
+    "loggedAt": "2026-11-19T08:01:26.862Z"
   }
 ]
