@@ -218,5 +218,15 @@
     "time": "18:30",
     "status": "Rescheduled with notice",
     "loggedAt": "2026-11-20T14:24:59.698Z"
+  },
+  {
+    "id": 1795268773013,
+    "coach": "Gauri Nigudkar",
+    "coachee": "Masooma Fatima",
+    "session": "Session 2",
+    "date": "2026-11-21",
+    "time": "19:00",
+    "status": "No-show by coachee",
+    "loggedAt": "2026-11-21T13:46:13.013Z"
   }
 ]
