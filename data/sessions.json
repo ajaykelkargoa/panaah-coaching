@@ -228,5 +228,15 @@
     "time": "19:00",
     "status": "Late reschedule by coachee (counts as completed)",
     "loggedAt": "2026-11-21T13:46:58.270Z"
+  },
+  {
+    "id": 1795284286911,
+    "coach": "Deepti Dhingra",
+    "coachee": "Mrudula Guntuk",
+    "session": "Session 2",
+    "date": "2026-11-21",
+    "time": "16:00",
+    "status": "Completed",
+    "loggedAt": "2026-11-21T18:04:46.911Z"
   }
 ]
