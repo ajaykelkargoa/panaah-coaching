@@ -248,5 +248,15 @@
     "time": "11:30",
     "status": "Completed",
     "loggedAt": "2026-11-21T18:05:38.454Z"
+  },
+  {
+    "id": 1795336004379,
+    "coach": "Kanwardeep Singh",
+    "coachee": "Maseera Shaikh",
+    "session": "Session 1",
+    "date": "2026-11-12",
+    "time": "16:00",
+    "status": "Completed",
+    "loggedAt": "2026-11-22T08:26:44.379Z"
   }
 ]
