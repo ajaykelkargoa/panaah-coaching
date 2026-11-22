@@ -268,5 +268,15 @@
     "time": "17:00",
     "status": "Completed",
     "loggedAt": "2026-11-22T08:27:19.968Z"
+  },
+  {
+    "id": 1795336154153,
+    "coach": "Kanwardeep Singh",
+    "coachee": "Siddharth More",
+    "session": "Session 1",
+    "date": "2026-11-14",
+    "time": "10:30",
+    "status": "Rescheduled with notice",
+    "loggedAt": "2026-11-22T08:29:14.153Z"
   }
 ]
