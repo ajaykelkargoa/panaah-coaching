@@ -318,5 +318,15 @@
     "time": "18:30",
     "status": "Completed",
     "loggedAt": "2026-11-23T14:02:42.519Z"
+  },
+  {
+    "id": 1795442582623,
+    "coach": "Theresa Fuchs-Santiago",
+    "coachee": "Aarshiya Das",
+    "session": "Session 2",
+    "date": "2026-12-04",
+    "time": "19:30",
+    "status": "Scheduled",
+    "loggedAt": "2026-11-23T14:03:02.623Z"
   }
 ]
