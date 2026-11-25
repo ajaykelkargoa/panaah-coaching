@@ -358,5 +358,15 @@
     "time": "10:00",
     "status": "Completed",
     "loggedAt": "2026-11-25T05:54:55.009Z"
+  },
+  {
+    "id": 1795586126394,
+    "coach": "Gauri Nigudkar",
+    "coachee": "Rajiya Khan",
+    "session": "Session 3",
+    "date": "2026-12-10",
+    "time": "11:00",
+    "status": "Scheduled",
+    "loggedAt": "2026-11-25T05:55:26.394Z"
   }
 ]
