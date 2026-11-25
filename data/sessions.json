@@ -338,5 +338,15 @@
     "time": "18:00",
     "status": "Scheduled",
     "loggedAt": "2026-11-25T02:18:05.821Z"
+  },
+  {
+    "id": 1795573117441,
+    "coach": "Gauri Nigudkar",
+    "coachee": "Nikhil Prakash Daware",
+    "session": "Session 1",
+    "date": "2026-11-30",
+    "time": "10:00",
+    "status": "Scheduled",
+    "loggedAt": "2026-11-25T02:18:37.441Z"
   }
 ]
