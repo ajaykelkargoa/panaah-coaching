@@ -368,5 +368,15 @@
     "time": "11:00",
     "status": "Scheduled",
     "loggedAt": "2026-11-25T05:55:26.394Z"
+  },
+  {
+    "id": 1795674849547,
+    "coach": "Parag Chitnis",
+    "coachee": "Anagha Joshi",
+    "session": "Session 1",
+    "date": "2026-11-26",
+    "time": "11:00",
+    "status": "Completed",
+    "loggedAt": "2026-11-26T06:34:09.547Z"
   }
 ]
