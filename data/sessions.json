@@ -378,5 +378,15 @@
     "time": "11:00",
     "status": "Completed",
     "loggedAt": "2026-11-26T06:34:09.547Z"
+  },
+  {
+    "id": 1795773128567,
+    "coach": "Parag Chitnis",
+    "coachee": "Vikas Rana",
+    "session": "Session 2",
+    "date": "2026-11-27",
+    "time": "14:00",
+    "status": "Completed",
+    "loggedAt": "2026-11-27T09:52:08.567Z"
   }
 ]
